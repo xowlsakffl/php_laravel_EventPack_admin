@@ -96,10 +96,3 @@ php artisan serve
 
 - 사용자 API: `php_laravel_EventsPack_dev1`
 - 관리자: `php_laravel_EventPack_admin`
-
-## 주의 사항
-
-- 운영 DB와 실서비스 환경값은 저장소에 포함하지 않습니다.
-- 최초 관리자 계정은 DB seed 또는 직접 생성이 필요합니다.
-- 관리자 접근은 `users.super = 'Y'`인 계정만 허용됩니다.
-- 이 프로젝트는 Laravel 6 기반이라 최신 Laravel 프로젝트와 설정 방식이 다릅니다.
