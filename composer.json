@@ -1,10 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "xowlsakffl/eventspack-admin",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Laravel admin console for managing EventsPack works, layouts, packs, and users.",
     "keywords": [
-        "framework",
-        "laravel"
+        "laravel",
+        "eventspack",
+        "admin"
     ],
     "license": "MIT",
     "require": {

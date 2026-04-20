@@ -1,0 +1,14 @@
+/node_modules/
+/vendor/
+/public/hot
+/public/storage
+/storage/*.key
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
+/.env
+/.env.backup
+/.phpunit.result.cache
+/.idea/
+/.vscode/
+npm-debug.log
+yarn-error.log
