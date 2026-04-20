@@ -88,7 +88,7 @@ class LayoutNaviController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_navigations,code',
             'html' => 'required',
             'css' => 'required'
         ],
@@ -118,7 +118,7 @@ class LayoutNaviController extends Controller
      */
     public function show($londx)
     {
-        $layoutData = LayoutNavigation::where('londx', $londx)->first();
+        $layoutData = LayoutNavigation::findOrFail($londx);
 
         return view('template.layout.navigations.layout_navi_show', compact('layoutData'));
     }
@@ -131,7 +131,7 @@ class LayoutNaviController extends Controller
      */
     public function edit($londx)
     {
-        $layoutData = LayoutNavigation::where('londx', $londx)->first();
+        $layoutData = LayoutNavigation::findOrFail($londx);
 
         return view('template.layout.navigations.layout_navi_edit', compact('layoutData'));
     }
@@ -159,7 +159,7 @@ class LayoutNaviController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_navigations,code,'.$londx.',londx',
             'html' => 'required',
             'css' => 'required'
         ],
@@ -175,7 +175,7 @@ class LayoutNaviController extends Controller
             'css.required' => 'css를 입력해주세요.',
         ]);
 
-        LayoutNavigation::where('londx', $londx)->update($data);
+        LayoutNavigation::findOrFail($londx)->update($data);
 
         flash('레이아웃 메뉴가 수정되었습니다.')->success();
         return redirect()->route('admin.layout-navigations.index');
@@ -189,7 +189,7 @@ class LayoutNaviController extends Controller
      */
     public function destroy($londx)
     {
-        LayoutNavigation::where('londx' ,$londx)->delete();
+        LayoutNavigation::findOrFail($londx)->delete();
         
         flash('레이아웃 메뉴가 삭제되었습니다.')->success();
         return redirect()->route('admin.layout-navigations.index');

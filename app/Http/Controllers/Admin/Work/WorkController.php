@@ -55,6 +55,7 @@ class WorkController extends Controller
 
     public function getUid(Request $request){
         $search = $request->search;
+        $response = [];
 
         $uids = User::orderby('uid', 'asc')->where('uid', 'LIKE', $search.'%')->limit(5)->get();
 
@@ -112,11 +113,11 @@ class WorkController extends Controller
 
     public function show($wdx)
     {
-        $work = Work::where('wdx', $wdx)->first();
+        $work = Work::findOrFail($wdx);
 
         $data = [
             'user_work' => $work,
-            'user_uid' => User::where('udx', $work->udx)->first()->uid,
+            'user_uid' => optional($work->user)->uid,
         ];
 
         $sites = $work->sites()->get();
@@ -126,11 +127,11 @@ class WorkController extends Controller
 
     public function edit($wdx)
     {
-        $work = Work::where('wdx', $wdx)->first();
+        $work = Work::findOrFail($wdx);
 
         $data = [
             'user_work' => $work,
-            'user_uid' => User::where('udx', $work->udx)->first()->uid,
+            'user_uid' => optional($work->user)->uid,
         ];
 
         return view('project.project_edit')->with('data', $data);
@@ -168,7 +169,7 @@ class WorkController extends Controller
             'duration' => '기간을 입력해주세요.'
         ]);
 
-        Work::where('wdx' ,$wdx)->update($data);
+        Work::findOrFail($wdx)->update($data);
 
         flash('프로젝트가 수정되었습니다.')->success();
         return redirect()->route('admin.works.index');
@@ -176,7 +177,7 @@ class WorkController extends Controller
 
     public function destroy($wdx)
     {
-        Work::where('wdx' ,$wdx)->delete();
+        Work::findOrFail($wdx)->delete();
         
         flash('프로젝트가 삭제되었습니다.')->success();
         return redirect()->route('admin.works.index');

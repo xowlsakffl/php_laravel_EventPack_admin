@@ -88,7 +88,7 @@ class LayoutBottomController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_bottoms,code',
             'html' => 'required',
             'css' => 'required'
         ],
@@ -118,7 +118,7 @@ class LayoutBottomController extends Controller
      */
     public function show($lobdx)
     {
-        $layoutData = LayoutBottom::where('lobdx', $lobdx)->first();
+        $layoutData = LayoutBottom::findOrFail($lobdx);
 
         return view('template.layout.bottoms.layout_bottom_show', compact('layoutData'));
     }
@@ -131,7 +131,7 @@ class LayoutBottomController extends Controller
      */
     public function edit($lobdx)
     {
-        $layoutData = LayoutBottom::where('lobdx', $lobdx)->first();
+        $layoutData = LayoutBottom::findOrFail($lobdx);
 
         return view('template.layout.bottoms.layout_bottom_edit', compact('layoutData'));
     }
@@ -159,7 +159,7 @@ class LayoutBottomController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_bottoms,code,'.$lobdx.',lobdx',
             'html' => 'required',
             'css' => 'required'
         ],
@@ -175,7 +175,7 @@ class LayoutBottomController extends Controller
             'css.required' => 'css를 입력해주세요.',
         ]);
 
-        LayoutBottom::where('lobdx', $lobdx)->update($data);
+        LayoutBottom::findOrFail($lobdx)->update($data);
 
         flash('하단 레이아웃이 수정되었습니다.')->success();
         return redirect()->route('admin.layout-bottoms.index');
@@ -189,7 +189,7 @@ class LayoutBottomController extends Controller
      */
     public function destroy($lobdx)
     {
-        LayoutBottom::where('lobdx' ,$lobdx)->delete();
+        LayoutBottom::findOrFail($lobdx)->delete();
         
         flash('하단 레이아웃이 삭제되었습니다.')->success();
         return redirect()->route('admin.layout-bottoms.index');

@@ -16,11 +16,16 @@ class CheckSuper
      */
     public function handle($request, Closure $next)
     {
-/*         if(Auth::user()->super === "Y"){
+        $user = Auth::user();
+
+        if(!$user) {
+            return redirect()->route('login');
+        }
+
+        if($user->super === 'Y') {
             return $next($request);
-        }else{
-            return redirect("/")->withMyerror("");
-        } */
-        
+        }
+
+        abort(403);
     }
 }

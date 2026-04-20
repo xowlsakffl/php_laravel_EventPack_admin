@@ -90,7 +90,7 @@ class LayoutEtcController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_etcs,code',
             'display_type' => 'required',
             'display_duration' => 'required',
             'font_default' => 'required',
@@ -124,7 +124,7 @@ class LayoutEtcController extends Controller
      */
     public function show($loedx)
     {
-        $layoutData = LayoutEtc::where('loedx', $loedx)->first();
+        $layoutData = LayoutEtc::findOrFail($loedx);
 
         return view('template.layout.etcs.layout_etc_show', compact('layoutData'));
     }
@@ -137,7 +137,7 @@ class LayoutEtcController extends Controller
      */
     public function edit($loedx)
     {
-        $layoutData = LayoutEtc::where('loedx', $loedx)->first();
+        $layoutData = LayoutEtc::findOrFail($loedx);
 
         return view('template.layout.etcs.layout_etc_edit', compact('layoutData'));
     }
@@ -167,7 +167,7 @@ class LayoutEtcController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_etcs,code,'.$loedx.',loedx',
             'display_type' => 'required',
             'display_duration' => 'required',
             'font_default' => 'required',
@@ -187,7 +187,7 @@ class LayoutEtcController extends Controller
             'font_resource.required' => '기본 폰트 출처를 입력해주세요.',
         ]);
 
-        LayoutEtc::where('loedx', $loedx)->update($data);
+        LayoutEtc::findOrFail($loedx)->update($data);
 
         flash('기타 레이아웃이 수정되었습니다.')->success();
         return redirect()->route('admin.layout-etcs.index');
@@ -201,7 +201,7 @@ class LayoutEtcController extends Controller
      */
     public function destroy($loedx)
     {
-        LayoutEtc::where('loedx' ,$loedx)->delete();
+        LayoutEtc::findOrFail($loedx)->delete();
         
         flash('기타 레이아웃이 삭제되었습니다.')->success();
         return redirect()->route('admin.layout-etcs.index');

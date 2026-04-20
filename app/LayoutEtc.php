@@ -13,6 +13,6 @@ class LayoutEtc extends Model
 
     public function layouts()
     {
-        return $this->hasMany('App\Layout', 'lodx');
+        return $this->hasMany('App\Layout', 'loedx');
     }
 }

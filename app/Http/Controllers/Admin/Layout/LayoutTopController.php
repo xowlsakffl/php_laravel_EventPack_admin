@@ -118,7 +118,7 @@ class LayoutTopController extends Controller
      */
     public function show($lotdx)
     {
-        $layoutData = LayoutTop::where('lotdx', $lotdx)->first();
+        $layoutData = LayoutTop::findOrFail($lotdx);
 
         return view('template.layout.tops.layout_top_show', compact('layoutData'));
     }
@@ -131,7 +131,7 @@ class LayoutTopController extends Controller
      */
     public function edit($lotdx)
     {
-        $layoutData = LayoutTop::where('lotdx', $lotdx)->first();
+        $layoutData = LayoutTop::findOrFail($lotdx);
 
         return view('template.layout.tops.layout_top_edit', compact('layoutData'));
     }
@@ -159,7 +159,7 @@ class LayoutTopController extends Controller
             'category' => 'required',
             'name_ko' => 'required|string',
             'name_en' => 'required|string',
-            'code' => 'required|unique:layout_tops,code',
+            'code' => 'required|unique:layout_tops,code,'.$lotdx.',lotdx',
             'html' => 'required',
             'css' => 'required'
         ],
@@ -175,7 +175,7 @@ class LayoutTopController extends Controller
             'css.required' => 'css를 입력해주세요.',
         ]);
 
-        LayoutTop::where('lotdx', $lotdx)->update($data);
+        LayoutTop::findOrFail($lotdx)->update($data);
 
         flash('상단 레이아웃이 수정되었습니다.')->success();
         return redirect()->route('admin.layout-tops.index');
@@ -189,7 +189,7 @@ class LayoutTopController extends Controller
      */
     public function destroy($lotdx)
     {
-        LayoutTop::where('lotdx' ,$lotdx)->delete();
+        LayoutTop::findOrFail($lotdx)->delete();
         
         flash('상단 레이아웃이 삭제되었습니다.')->success();
         return redirect()->route('admin.layout-tops.index');

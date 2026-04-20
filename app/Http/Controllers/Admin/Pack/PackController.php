@@ -115,7 +115,7 @@ class PackController extends Controller
      */
     public function show($pdx)
     {
-        $packData = Pack::where('pdx', $pdx)->first();
+        $packData = Pack::findOrFail($pdx);
 
         return view('template.pack.pack_show', compact('packData'));
     }
@@ -128,7 +128,7 @@ class PackController extends Controller
      */
     public function edit($pdx)
     {
-        $packData = Pack::where('pdx', $pdx)->first();
+        $packData = Pack::findOrFail($pdx);
 
         return view('template.pack.pack_edit', compact('packData'));
     }
@@ -172,7 +172,7 @@ class PackController extends Controller
             'default_path.required' => '기본 경로를 입력해주세요.',
         ]);
 
-        Pack::where('pdx', $pdx)->update($data);
+        Pack::findOrFail($pdx)->update($data);
 
         flash('기능이 수정되었습니다.')->success();
         return redirect()->route('admin.packs.index');
@@ -186,7 +186,7 @@ class PackController extends Controller
      */
     public function destroy($pdx)
     {
-        Pack::where('pdx' ,$pdx)->delete();
+        Pack::findOrFail($pdx)->delete();
         
         flash('기능이 삭제되었습니다.')->success();
         return redirect()->route('admin.packs.index');

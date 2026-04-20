@@ -12,8 +12,8 @@ class PackBoard extends Model
         'stdx', 'title', 'content', 'files', 'udx', 'name', 'password', 'ip', 'show_this', 'secret', 'notice', 'state'
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany('App\User', 'udx');
+        return $this->belongsTo('App\User', 'udx');
     }
 }

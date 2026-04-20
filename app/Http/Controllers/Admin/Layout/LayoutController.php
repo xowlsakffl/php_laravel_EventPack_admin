@@ -130,7 +130,7 @@ class LayoutController extends Controller
      */
     public function show($lodx)
     {
-        $layoutData = Layout::where('lodx', $lodx)->first();
+        $layoutData = Layout::findOrFail($lodx);
 
         return view('template.layout.layout_show', compact('layoutData'));
     }
@@ -143,7 +143,7 @@ class LayoutController extends Controller
      */
     public function edit($lodx)
     {
-        $layoutData = Layout::where('lodx', $lodx)->first();
+        $layoutData = Layout::findOrFail($lodx);
         $layoutTops = LayoutTop::all();
         $layoutNavis = LayoutNavigation::all();
         $layoutMiddles = LayoutMiddle::all();
@@ -194,7 +194,7 @@ class LayoutController extends Controller
             'descript_en.required' => '설명을 입력해주세요.',
         ]);
 
-        Layout::where('lodx', $lodx)->update($data);
+        Layout::findOrFail($lodx)->update($data);
 
         flash('레이아웃이 수정되었습니다.')->success();
         return redirect()->route('admin.layouts.index');
@@ -208,7 +208,7 @@ class LayoutController extends Controller
      */
     public function destroy($lodx)
     {
-        Layout::where('lodx' ,$lodx)->delete();
+        Layout::findOrFail($lodx)->delete();
         
         flash('레이아웃이 삭제되었습니다.')->success();
         return redirect()->route('admin.layouts.index');

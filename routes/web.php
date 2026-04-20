@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::get('/', 'HomeController@index');
 
-    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('super')->group(function(){
         Route::resource('works', 'Work\WorkController')->parameters([
             'works' => 'wdx'
         ]);
